@@ -1,2 +1,3 @@
 # easycsv
-A thin wrapper over `encoding/csv` with some extra functionality
+Package easycsv provides some utilities that simplify reading CSV data
+using the `encoding/csv` package.

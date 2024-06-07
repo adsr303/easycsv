@@ -15,7 +15,7 @@ import (
 // If any of the column names cannot be found in the CSV header row,
 // ReadColumns returns an error.
 func ReadColumns(reader io.Reader, columns []string) ([][]string, error) {
-	result := make([][]string, 0)
+	var result [][]string
 	more := func(values []string) error {
 		result = append(result, values)
 		return nil

@@ -1,16 +1,18 @@
 package easycsv
 
 import (
+	"fmt"
 	"reflect"
 	"strings"
 	"testing"
 )
 
-func TestReadColumns(t *testing.T) {
-	input := `a,b,c
+const input = `a,b,c
 1,2,3
 4,5,6
 `
+
+func TestReadColumns(t *testing.T) {
 	tests := []struct {
 		name    string
 		columns []string
@@ -47,6 +49,26 @@ func TestReadColumns(t *testing.T) {
 		t.Run(test.name, func(t *testing.T) {
 			_, err := ReadColumns(strings.NewReader(test.input), test.columns)
 			if err == nil {
+				t.Fail()
+			}
+		})
+	}
+}
+
+func TestReadColumnsFunc(t *testing.T) {
+	tests := []struct {
+		name      string
+		f         func([]string) error
+		wantError bool
+	}{
+		{"good", func([]string) error { return nil }, false},
+		{"bad", func([]string) error { return fmt.Errorf("") }, true},
+	}
+	for _, test := range tests {
+		test := test
+		t.Run(test.name, func(t *testing.T) {
+			err := ReadColumnsFunc(strings.NewReader(input), []string{"a", "b", "c"}, test.f)
+			if (err == nil) && test.wantError {
 				t.Fail()
 			}
 		})

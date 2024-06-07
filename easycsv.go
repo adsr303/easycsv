@@ -20,8 +20,7 @@ func ReadColumns(reader io.Reader, columns []string) ([][]string, error) {
 		result = append(result, values)
 		return nil
 	}
-	err := ReadColumnsFunc(reader, columns, more)
-	if err != nil {
+	if err := ReadColumnsFunc(reader, columns, more); err != nil {
 		return nil, err
 	}
 	return result, nil
@@ -59,8 +58,7 @@ func ReadColumnsFunc(reader io.Reader, columns []string, f func([]string) error)
 		for i, ii := range indices {
 			r[i] = record[ii]
 		}
-		err = f(r)
-		if err != nil {
+		if err = f(r); err != nil {
 			return err
 		}
 	}

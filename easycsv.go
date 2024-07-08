@@ -1,5 +1,5 @@
 // Package easycsv provides some utilities that simplify reading CSV data
-// using the `encoding/csv` package.
+// using the [encoding/csv] package.
 package easycsv
 
 import (
